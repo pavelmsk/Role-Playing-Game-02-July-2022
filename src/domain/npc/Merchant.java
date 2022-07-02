@@ -3,7 +3,7 @@ package domain.npc;
 import entity.Seller;
 
 public class Merchant implements Seller {
-    //Метод для продажи
+
     @Override
     public String sell(Goods goods) {
         String result = "";
@@ -12,7 +12,7 @@ public class Merchant implements Seller {
         }
         return result;
     }
-    //Энам для товаров
+
     public enum Goods {
         POTION
     }

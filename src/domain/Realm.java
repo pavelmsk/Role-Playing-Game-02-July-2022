@@ -10,21 +10,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Realm {
-    //Класс для чтения введенных строк из консоли
     private static BufferedReader br;
-    //Игрок должен хранится на протяжении всей игры
     private static FantasyCharacter player = null;
-    //Класс для битвы можно не создавать каждый раз, а переиспользовать
     private static BattleScene battleScene = null;
 
     public static void main(String[] args) {
-        //Инициализируем BufferedReader
         br = new BufferedReader(new InputStreamReader(System.in));
-        //Инициализируем класс для боя
         battleScene = new BattleScene();
-        //Первое что нужно сделать при запуске игры это создать персонажа, поэтому мы предлагаем ввести его имя
-        System.out.println("Введите имя персонажа:");
-        //Далее ждем ввод от пользователя
+        System.out.println("Please enter your gamer's name:");
         try {
             command(br.readLine());
         } catch (IOException e) {
@@ -33,7 +26,6 @@ public class Realm {
     }
 
     private static void command(String string) throws IOException {
-        //Если это первый запуск, то мы должны создать игрока, именем будет служить первая введенная строка из консоли
         if (player == null) {
             player = new Hero(
                     string,
@@ -43,14 +35,13 @@ public class Realm {
                     0,
                     0
             );
-            System.out.println(String.format("Спасти наш мир от драконов вызвался %s! Да будет его броня крепка и бицепс кругл!", player.getName()));
-            //Метод для вывода меню
+            System.out.println(String.format("%s will be saving our world from dragons. Wish your hero good luck!", player.getName()));
             printNavigation();
         }
-        //Варианты для команд
+
         switch (string) {
             case "1": {
-                System.out.println("Торговец еще не приехал");
+                System.out.println("The merchant hasn't arrived yet.");
                 command(br.readLine());
             }
             break;
@@ -61,15 +52,14 @@ public class Realm {
             case "3":
                 System.exit(1);
                 break;
-            case "да":
+            case "yes":
                 command("2");
                 break;
-            case "нет": {
+            case "no": {
                 printNavigation();
                 command(br.readLine());
             }
         }
-        //Снова ждем команды от пользователя
         command(br.readLine());
     }
 
@@ -77,8 +67,8 @@ public class Realm {
         battleScene.fight(player, createMonster(), new FightCallback() {
             @Override
             public void fightWin() {
-                System.out.println(String.format("%s победил! Теперь у вас %d опыта и %d золота, а также осталось %d едениц здоровья.", player.getName(), player.getXp(), player.getGold(), player.getHealthPoints()));
-                System.out.println("Желаете продолжить поход или вернуться в город? (да/нет)");
+                System.out.println(String.format("%s won! Now you have %d units of skills and %d units of gold. You also have %d units of health.", player.getName(), player.getXp(), player.getGold(), player.getHealthPoints()));
+                System.out.println("Would you like to continue your adventures or return to the town? (yes/no)");
                 try {
                     command(br.readLine());
                 } catch (IOException e) {
@@ -94,18 +84,16 @@ public class Realm {
     }
 
     private static void printNavigation() {
-        System.out.println("Куда вы хотите пойти?");
-        System.out.println("1. К Торговцу");
-        System.out.println("2. В темный лес");
-        System.out.println("3. Выход");
+        System.out.println("Where would you like to go?");
+        System.out.println("1. To the merchant.");
+        System.out.println("2. To the dark forest.");
+        System.out.println("3. To the exit.");
     }
 
     private static FantasyCharacter createMonster() {
-        //Рандомайзер
         int random = (int) (Math.random() * 10);
-        //С вероятностью 50% создается или скелет  или гоблин
         if (random % 2 == 0) return new Goblin(
-                "Гоблин",
+                "Goblin",
                 50,
                 10,
                 10,
@@ -113,7 +101,7 @@ public class Realm {
                 20
         );
         else return new Skeleton(
-                "Скелет",
+                "Skeleton",
                 25,
                 20,
                 20,

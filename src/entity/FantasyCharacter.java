@@ -1,16 +1,13 @@
 package entity;
 
 public abstract class FantasyCharacter implements Fighter{
-    //Имя персонажа
     private String name;
-    //Статы персонажа
     private int healthPoints;
     private int strength;
     private int dexterity;
-    //Опыт и золото
     private int xp;
     private int gold;
-    //Коснтруктор
+
     public FantasyCharacter(String name, int healthPoints, int strength, int dexterity, int xp, int gold) {
         this.name = name;
         this.healthPoints = healthPoints;
@@ -19,7 +16,7 @@ public abstract class FantasyCharacter implements Fighter{
         this.xp = xp;
         this.gold = gold;
     }
-    //Мпетод для вдения боя
+
     @Override
     public int attack() {
         if (dexterity * 3 > getRandomValue()) return strength;
@@ -66,9 +63,9 @@ public abstract class FantasyCharacter implements Fighter{
     private int getRandomValue() {
         return (int) (Math.random() * 100);
     }
-    //Переопределяем вывод в консоль, чтобы выводилось имя и очки здоровья
+
     @Override
     public String toString() {
-        return String.format("%s здоровье:%d", name, healthPoints);
+        return String.format("%s health :%d", name, healthPoints);
     }
 }
